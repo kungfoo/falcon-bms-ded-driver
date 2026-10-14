@@ -1,0 +1,4 @@
+log_level = "info"
+vendor_id = 0x4098
+product_id = 0xbf06
+update_period_ms = 33
