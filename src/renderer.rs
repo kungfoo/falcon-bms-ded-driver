@@ -33,7 +33,7 @@ impl Renderer {
     }
 }
 
-fn draw_glyph(buffer: &mut Vec<bool>, row: usize, col: usize, glyph: &[bool; 104]) {
+fn draw_glyph(buffer: &mut [bool], row: usize, col: usize, glyph: &[bool; 104]) {
     let start_x = col * FONT_CHAR_WIDTH;
     let start_y = row * FONT_CHAR_HEIGHT;
 

@@ -124,11 +124,11 @@ fn main() -> Result<()> {
                     };
                     let rendered = renderer.render(&waiting_lines, inv);
 
-                    if let Some(ref mut driver) = driver_opt {
-                        if let Err(e) = driver.send_display_data(&rendered) {
-                            warn!("Failed to send data to HID device: {}. Disconnecting.", e);
-                            driver_opt = None;
-                        }
+                    if let Some(ref mut driver) = driver_opt
+                        && let Err(e) = driver.send_display_data(&rendered)
+                    {
+                        warn!("Failed to send data to HID device: {}. Disconnecting.", e);
+                        driver_opt = None;
                     }
                 }
             } else {
@@ -146,14 +146,14 @@ fn main() -> Result<()> {
                 hasher.write(&rendered);
                 let hash = hasher.finish();
 
-                if hash != last_hash {
-                    if let Some(ref mut driver) = driver_opt {
-                        match driver.send_display_data(&rendered) {
-                            Ok(_) => last_hash = hash,
-                            Err(e) => {
-                                warn!("Failed to send data to HID device: {}. Disconnecting.", e);
-                                driver_opt = None;
-                            }
+                if hash != last_hash
+                    && let Some(ref mut driver) = driver_opt
+                {
+                    match driver.send_display_data(&rendered) {
+                        Ok(_) => last_hash = hash,
+                        Err(e) => {
+                            warn!("Failed to send data to HID device: {}. Disconnecting.", e);
+                            driver_opt = None;
                         }
                     }
                 }
@@ -171,11 +171,11 @@ fn main() -> Result<()> {
                 };
                 let rendered = renderer.render(&waiting_lines, inv);
 
-                if let Some(ref mut driver) = driver_opt {
-                    if let Err(e) = driver.send_display_data(&rendered) {
-                        warn!("Failed to send data to HID device: {}. Disconnecting.", e);
-                        driver_opt = None;
-                    }
+                if let Some(ref mut driver) = driver_opt
+                    && let Err(e) = driver.send_display_data(&rendered)
+                {
+                    warn!("Failed to send data to HID device: {}. Disconnecting.", e);
+                    driver_opt = None;
                 }
             }
         }
