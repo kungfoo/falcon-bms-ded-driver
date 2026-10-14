@@ -53,7 +53,6 @@ fn draw_glyph(buffer: &mut [bool], row: usize, col: usize, glyph: &[bool; 104]) 
 fn pack_into_bit_buffer(buffer: Vec<bool>) -> Vec<u8> {
     let packed_size = (DISPLAY_WIDTH * DISPLAY_HEIGHT) / 8;
     let mut packed = vec![0u8; packed_size + 4];
-    // 4 bytes header/padding? C# adds 4.
 
     for row in 0..DISPLAY_HEIGHT {
         for col in 0..(DISPLAY_WIDTH / 8) {
