@@ -1,0 +1,42 @@
+name: Run tests and build a package
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build_release_and_package:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        ref: ${{ github.ref }}
+        submodules: recursive
+    - name: Install MinGW-w64
+      run: sudo apt-get update && sudo apt-get install -y mingw-w64
+    - name: Build for x64
+      run: rustup target add x86_64-pc-windows-gnu && cargo test && cargo build --release --target=x86_64-pc-windows-gnu
+    - name: Package binaries
+      shell: bash
+      run: |
+        mkdir -p target/package/win64
+
+        cp config.toml target/package/win64/config.toml
+        cp target/x86_64-pc-windows-gnu/release/falcon-bms-ded-driver.exe target/package/win64/
+
+        ls target/package/win64
+
+        zip -9  target/package/falcon-bms-ded-driver-win64.zip target/package/win64/*
+
+    - name: Upload win64 binary
+      uses: actions/upload-artifact@v4
+      with:
+        name: falcon-bms-ded-driver-win64.zip
+        path: ./target/package/falcon-bms-ded-driver-win64.zip
