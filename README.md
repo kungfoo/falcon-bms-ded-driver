@@ -8,6 +8,11 @@ One can set the `log_level` and the `update_period_ms` in `config.toml`.
 Default values are info and 33ms, which equates to 30fps.
 Theoretically, one can also override the `vendor_id` and `product_id` (if there are ever new hardware revisions).
 
+## Attribution
+
+This is based on the amazing [DedSharp by broosa](https://github.com/broosa/DedSharp/) but is a reimplementation in rust with a few more features.
+I also hope that being able to compile this for Linux natively will come in handy some day.
+
 ## How to build this?
 
 This will build for windows (probably `x86_64-pc-windows-gnu`, since it directly uses Win32 API and there is no point in building it for other platforms. After all BMS currently runs on windows (or wine) only. 
